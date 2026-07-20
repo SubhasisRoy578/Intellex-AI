@@ -283,3 +283,6 @@ The app can be deployed to any Node.js hosting:
 ---
 
 Built with ❤️ using Next.js, React, and TypeScript.
+
+### Links
+https://intellex-ai-4v-b1vu2x6hf-subhasis-roy.vercel.app/
