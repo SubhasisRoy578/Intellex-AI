@@ -1,0 +1,1 @@
+# Intellex AI - App package
