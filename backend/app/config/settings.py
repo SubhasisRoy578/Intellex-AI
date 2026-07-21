@@ -62,5 +62,10 @@ class Settings(BaseSettings):
     MAX_UPLOAD_SIZE: int = 10485760  # 10 MB in bytes
     MAX_STORAGE_TARGET_MB: int = 450
 
+    # Clerk Authentication Configuration
+    CLERK_SECRET_KEY: str = "sk_test_51ClerkSecretKeyHerePlaceholder"
+    CLERK_PUBLISHABLE_KEY: str = "pk_test_51ClerkPublishableKeyHerePlaceholder"
+    CLERK_JWT_ISSUER: str = "https://clerk.your-domain.clerk.accounts.dev"
+
 
 settings = Settings()
