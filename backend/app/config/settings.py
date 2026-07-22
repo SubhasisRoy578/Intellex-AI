@@ -1,5 +1,5 @@
 import json
-from typing import Any, List, Union
+from typing import Any, List, Union, Optional
 from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -66,6 +66,14 @@ class Settings(BaseSettings):
     CLERK_SECRET_KEY: str = "sk_test_51ClerkSecretKeyHerePlaceholder"
     CLERK_PUBLISHABLE_KEY: str = "pk_test_51ClerkPublishableKeyHerePlaceholder"
     CLERK_JWT_ISSUER: str = "https://clerk.your-domain.clerk.accounts.dev"
+
+    # AI Conversation Engine Configuration
+    AI_PROVIDER: str = "mock"  # "mock", "openai", "gemini"
+    OPENAI_API_KEY: Optional[str] = ""
+    GEMINI_API_KEY: Optional[str] = ""
+    AI_DEFAULT_MODEL: str = "mock-model"
+    AI_TIMEOUT_SECONDS: int = 30
+    AI_MAX_RETRIES: int = 3
 
 
 settings = Settings()
