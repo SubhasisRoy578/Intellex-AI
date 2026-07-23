@@ -75,5 +75,15 @@ class Settings(BaseSettings):
     AI_TIMEOUT_SECONDS: int = 30
     AI_MAX_RETRIES: int = 3
 
+    # Secure Upload Configuration
+    ALLOWED_EXTENSIONS: List[str] = [".pdf", ".docx", ".txt", ".png", ".jpg", ".jpeg"]
+    ALLOWED_MIME_TYPES: List[str] = [
+        "application/pdf",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        "text/plain",
+        "image/png",
+        "image/jpeg"
+    ]
+
 
 settings = Settings()
