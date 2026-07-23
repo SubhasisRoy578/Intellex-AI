@@ -2,6 +2,7 @@ from fastapi import APIRouter
 from app.routes import health
 from app.auth import routes as auth_routes
 from app.ai import routes as ai_routes
+from app.uploads import routes as upload_routes
 
 api_router = APIRouter()
 
@@ -9,3 +10,4 @@ api_router = APIRouter()
 api_router.include_router(health.router, tags=["System Health"])
 api_router.include_router(auth_routes.router, tags=["Clerk Authentication"])
 api_router.include_router(ai_routes.router, tags=["AI Conversation Engine"])
+api_router.include_router(upload_routes.router, tags=["Secure File Upload Infrastructure"])
