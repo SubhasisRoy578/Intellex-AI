@@ -85,5 +85,12 @@ class Settings(BaseSettings):
         "image/jpeg"
     ]
 
+    # Latest Internet Search Configuration
+    SEARCH_PROVIDER: str = "mock"  # "mock", "tavily"
+    TAVILY_API_KEY: Optional[str] = ""
+    SEARCH_DEFAULT_LIMIT: int = 5
+    SEARCH_TIMEOUT_SECONDS: int = 15
+    SEARCH_MAX_RETRIES: int = 3
+
 
 settings = Settings()
