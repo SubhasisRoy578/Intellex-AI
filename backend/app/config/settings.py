@@ -23,7 +23,7 @@ class Settings(BaseSettings):
     HOST: str = "0.0.0.0"
     PORT: int = 8000
 
-    # Database Configuration
+    # Database Configuration (PostgreSQL)
     DB_HOST: str = "localhost"
     DB_PORT: int = 5432
     DB_USER: str = "postgres"
@@ -33,6 +33,11 @@ class Settings(BaseSettings):
     # Generated or explicitly provided URLs
     DATABASE_URL: str = "postgresql://postgres:postgres@localhost:5432/intellex_ai"
     ASYNC_DATABASE_URL: str = "postgresql+asyncpg://postgres:postgres@localhost:5432/intellex_ai"
+
+    # Production Database Pooling Parameters
+    DB_POOL_SIZE: int = 20
+    DB_MAX_OVERFLOW: int = 10
+    DB_POOL_TIMEOUT: int = 30
 
     # CORS configuration
     BACKEND_CORS_ORIGINS: List[str] = [
@@ -56,6 +61,8 @@ class Settings(BaseSettings):
     # Logging
     LOG_LEVEL: str = "INFO"
     LOG_FORMAT: str = "JSON"  # JSON or CONSOLE
+    LOG_ROTATION_MAX_BYTES: int = 5242880  # 5 MB
+    LOG_ROTATION_BACKUP_COUNT: int = 5
 
     # Storage and Limits
     UPLOAD_DIR: str = "uploads"
@@ -91,6 +98,13 @@ class Settings(BaseSettings):
     SEARCH_DEFAULT_LIMIT: int = 5
     SEARCH_TIMEOUT_SECONDS: int = 15
     SEARCH_MAX_RETRIES: int = 3
+
+    # Configurable Production Rate Limiting
+    RATE_LIMIT_PER_MINUTE: int = 60
+
+    # Modular Caching Configuration
+    CACHE_BACKEND: str = "in_memory"  # "in_memory", "redis"
+    CACHE_DEFAULT_TTL: int = 300
 
 
 settings = Settings()
