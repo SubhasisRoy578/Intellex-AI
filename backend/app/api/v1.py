@@ -8,6 +8,7 @@ from app.images import routes as image_routes
 from app.search import routes as search_routes
 from app.orchestrator import routes as orchestrator_routes
 from app.conversations import routes as conversation_routes
+from app.monitoring import routes as monitoring_routes
 
 api_router = APIRouter()
 
@@ -21,3 +22,4 @@ api_router.include_router(image_routes.router, tags=["Image Analysis & OCR Modul
 api_router.include_router(search_routes.router, tags=["Latest Internet Search Integration"])
 api_router.include_router(orchestrator_routes.router, tags=["AI Knowledge Orchestration Layer"])
 api_router.include_router(conversation_routes.router, tags=["Conversation Management Module"])
+api_router.include_router(monitoring_routes.router, tags=["System Performance & Monitoring"])
