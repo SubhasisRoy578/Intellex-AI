@@ -1,4 +1,5 @@
 import logging
+import logging.handlers
 import sys
 import json
 from datetime import datetime, timezone
@@ -61,15 +62,20 @@ def setup_logging() -> None:
     console_handler.setLevel(log_level)
     root_logger.addHandler(console_handler)
 
-    # File handler (to persist logs inside logs/ directory)
+    # Production-hardened Rotating File handler (persists logs in logs/ with auto-rotation safeguards)
     try:
-        file_handler = logging.FileHandler("logs/app.log", encoding="utf-8")
+        file_handler = logging.handlers.RotatingFileHandler(
+            "logs/app.log",
+            encoding="utf-8",
+            maxBytes=settings.LOG_ROTATION_MAX_BYTES,
+            backupCount=settings.LOG_ROTATION_BACKUP_COUNT,
+        )
         file_handler.setFormatter(formatter)
         file_handler.setLevel(log_level)
         root_logger.addHandler(file_handler)
     except Exception as e:
         # Fail gracefully if logging directory cannot be written to
-        print(f"Could not initialize file logging handler: {e}", file=sys.stderr)
+        print(f"Could not initialize rotating file logging handler: {e}", file=sys.stderr)
 
     # Suppress verbose loggers
     logging.getLogger("uvicorn.access").setLevel(logging.WARNING)
