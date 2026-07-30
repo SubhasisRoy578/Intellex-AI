@@ -8,8 +8,6 @@ from app.core.logging import logger
 from app.api.v1 import api_router
 from app.exceptions.exceptions import register_exception_handlers
 from app.middleware.middleware import CorrelationAndPerformanceMiddleware
-from app.middleware.security import SecurityHeadersMiddleware
-from app.middleware.rate_limit import InMemoryRateLimiterMiddleware
 
 
 @asynccontextmanager
@@ -49,16 +47,10 @@ if settings.BACKEND_CORS_ORIGINS:
 # 2. Register Request-ID Correlation & Performance Monitoring Middleware
 app.add_middleware(CorrelationAndPerformanceMiddleware)
 
-# 3. Register Secure HTTP Headers Middleware
-app.add_middleware(SecurityHeadersMiddleware)
-
-# 4. Register Configurable Rate Limiting Middleware
-app.add_middleware(InMemoryRateLimiterMiddleware)
-
-# 5. Register Centralized Exceptions and Validation Formatters
+# 3. Register Centralized Exceptions and Validation Formatters
 register_exception_handlers(app)
 
-# 6. Mount Versioned Router
+# 4. Mount Versioned Router
 app.include_router(api_router, prefix=settings.API_V1_STR)
 
 
