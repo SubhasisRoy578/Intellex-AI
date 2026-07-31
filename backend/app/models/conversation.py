@@ -1,6 +1,6 @@
 from datetime import datetime, timezone
 from typing import List, Optional
-from sqlalchemy import String, ForeignKey, DateTime
+from sqlalchemy import String, ForeignKey, DateTime, Integer, Index
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.database.database import Base
 
@@ -11,7 +11,8 @@ class Conversation(Base):
     __tablename__ = "conversations"
 
     id: Mapped[str] = mapped_column(String(36), primary_key=True)
-    title: Mapped[str] = mapped_column(String(255), nullable=False)
+    user_id: Mapped[str] = mapped_column(String(100), nullable=False, index=True)
+    title: Mapped[str] = mapped_column(String(255), nullable=False, index=True)
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         default=lambda: datetime.now(timezone.utc),
@@ -23,6 +24,14 @@ class Conversation(Base):
         onupdate=lambda: datetime.now(timezone.utc),
         nullable=False,
     )
+    last_activity_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        default=lambda: datetime.now(timezone.utc),
+        nullable=False,
+        index=True,
+    )
+    message_count: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
+    status: Mapped[str] = mapped_column(String(50), default="active", nullable=False)  # active, archived
 
     # Relationship to individual conversation messages
     messages: Mapped[List["Message"]] = relationship(
@@ -43,6 +52,7 @@ class Message(Base):
         String(36),
         ForeignKey("conversations.id", ondelete="CASCADE"),
         nullable=False,
+        index=True,
     )
     role: Mapped[str] = mapped_column(String(50), nullable=False)  # user, assistant, system
     content: Mapped[str] = mapped_column(nullable=False)
@@ -56,3 +66,7 @@ class Message(Base):
     conversation: Mapped["Conversation"] = relationship(
         "Conversation", back_populates="messages"
     )
+
+
+# Proper compound indexing to optimize retrieval speed
+Index("idx_user_conversations", Conversation.user_id, Conversation.last_activity_at)
